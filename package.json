@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "build": "ncc build src/index.js --license licenses.txt",
-    "lint": "eslint --ext js,jsx src --fix"
+    "lint": "eslint --ext js,jsx src --fix",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "eslint": "^8.21.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest": "^26.7.0",
+    "husky": "^8.0.1",
     "jest": "^28.1.3"
   }
 }
