@@ -1,11 +1,12 @@
 # csv-contribution-action
-Checks contributions to CSV files
+
+A Github Action that checks contributions to CSV files
 
 ## Inputs
 
-## `who-to-greet`
+## `file-content`
 
-**Required** The name of the person to greet. Default `"World"`.
+**Required** The content of the file to check. Default `""`.
 
 ## Outputs
 
@@ -15,6 +16,6 @@ The time we greeted you.
 
 ## Example usage
 
-uses: actions/hello-world-javascript-action@v1.1
+uses: actions/csv-contributions@v1.0.0
 with:
-who-to-greet: 'Mona the Octocat'
+    file-content: 'Mona the Octocat'

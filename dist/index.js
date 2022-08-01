@@ -9006,8 +9006,8 @@ const core = __nccwpck_require__(8890);
 const github = __nccwpck_require__(111);
 
 try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
+  // `file-content` input defined in action metadata file
+  const nameToGreet = core.getInput('file-content');
   console.log(`Hello ${nameToGreet}!`);
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);

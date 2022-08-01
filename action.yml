@@ -1,10 +1,10 @@
 name: 'csv-contribution-action'
 description: 'Checks contributions to CSV files'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  file-content:
+    description: 'File content'
     required: true
-    default: 'World'
+    default: ''
 outputs:
   time: # id of output
     description: 'The time we greeted you'
