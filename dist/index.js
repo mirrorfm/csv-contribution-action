@@ -2084,14 +2084,17 @@ const findDuplicates = function(obj) {
   return results;
 }
 
-
+// main code
 const fileContent = core.getInput('file-content');
+const findDuplicatesStr = core.getInput('find-duplicates');
 
 csvStringToObject(fileContent).then((obj) => {
-  const duplicates = findDuplicates(obj);
+  if (findDuplicatesStr === 'true') {
+    const duplicates = findDuplicates(obj);
 
-  if (duplicates.length > 0) {
-    core.setFailed(`Found duplicates: ${duplicates}`);
+    if (duplicates.length > 0) {
+      core.setFailed(`Found duplicates: ${duplicates}`);
+    }
   }
 }).catch((error) => {
   core.setFailed(`Invalid CSV: ${error.message}`);

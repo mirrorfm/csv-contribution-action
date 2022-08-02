@@ -5,9 +5,10 @@ inputs:
     description: 'File content'
     required: true
     default: ''
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  find-duplicates:
+    description: 'Find duplicates'
+    required: false
+    default: 'false'
 runs:
   using: 'node16'
   main: 'dist/index.js'
