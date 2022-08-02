@@ -16,20 +16,15 @@ const csvStringToObject = async function(str) {
       }
     });
 
-    // Catch any error
     parser.on('error', function (err) {
       reject(err);
     });
 
-    // Test that the parsed records matched the expected records
     parser.on('end', function () {
       resolve(records);
     });
 
-    // Write data to the stream
     parser.write(str);
-
-    // Close the readable stream
     parser.end();
   });
 }
@@ -65,19 +60,18 @@ const findDuplicates = function(obj) {
   return results;
 }
 
-try {
-  const fileContent = core.getInput('file-content');
-  csvStringToObject(fileContent).then((obj) => {
-    const duplicates = findDuplicates(obj);
-    if (duplicates.length > 0) {
-      core.setFailed('Found duplicates ' + duplicates);
-    }
-  }).catch((error) => {
-    core.setFailed(error.message);
-  })
-} catch (error) {
-  core.setFailed(error.message);
-}
+
+const fileContent = core.getInput('file-content');
+
+csvStringToObject(fileContent).then((obj) => {
+  const duplicates = findDuplicates(obj);
+
+  if (duplicates.length > 0) {
+    core.setFailed(`Found duplicates: ${duplicates}`);
+  }
+}).catch((error) => {
+  core.setFailed(`Invalid CSV: ${error.message}`);
+});
 
 module.exports = {
   csvStringToObject,
