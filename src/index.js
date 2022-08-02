@@ -1,29 +1,37 @@
 const core = require('@actions/core');
 const { parse } = require('csv-parse');
 
-const csvStringToObject = function(fileContent) {
-  const records = [];
+const csvStringToObject = async function(str) {
+  return new Promise((resolve, reject) => {
+    const records = [];
 
-  const parser = parse({
-    delimiter: ',',
+    const parser = parse({
+      delimiter: ',',
+    });
+
+    parser.on('readable', () => {
+      let record;
+      while ((record = parser.read()) !== null) {
+        records.push(record);
+      }
+    });
+
+    // Catch any error
+    parser.on('error', function (err) {
+      reject(err);
+    });
+
+    // Test that the parsed records matched the expected records
+    parser.on('end', function () {
+      resolve(records);
+    });
+
+    // Write data to the stream
+    parser.write(str);
+
+    // Close the readable stream
+    parser.end();
   });
-
-  parser.on('readable', () => {
-    let record;
-    while ((record = parser.read()) !== null) {
-      records.push(record);
-    }
-  });
-
-  parser.on('error', (err) => {
-    console.error(err.message);
-    // throw (err);
-  });
-
-  parser.write(fileContent);
-  parser.end();
-
-  return records;
 }
 
 function quickSort(array) {
@@ -59,12 +67,14 @@ const findDuplicates = function(obj) {
 
 try {
   const fileContent = core.getInput('file-content');
-  console.log(fileContent);
-  const duplicates = findDuplicates(csvStringToObject(fileContent));
-  console.log('Duplicates', duplicates);
-  if (duplicates.length > 0) {
-    core.setFailed('Found duplicates ' + duplicates);
-  }
+  csvStringToObject(fileContent).then((obj) => {
+    const duplicates = findDuplicates(obj);
+    if (duplicates.length > 0) {
+      core.setFailed('Found duplicates ' + duplicates);
+    }
+  }).catch((error) => {
+    core.setFailed(error.message);
+  })
 } catch (error) {
   core.setFailed(error.message);
 }
