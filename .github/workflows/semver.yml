@@ -1,0 +1,16 @@
+name: Update Major Minor Semver
+
+on:
+  push:
+    branches-ignore:
+      - '**'
+    tags:
+      - '*.*.*'
+
+jobs:
+  update-semver:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: haya14busa/action-update-semver@v1
