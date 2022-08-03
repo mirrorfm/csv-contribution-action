@@ -15,7 +15,7 @@ Made for [mirrorfm-data](https://github.com/mirrorfm/mirrorfm-data), a data-as-c
 
 ## Example usage
 
-    uses: stephanebruckert/csv-contribution-action@v1.0.0
+    uses: stephanebruckert/csv-contribution-action@v1.0.1
     with:
         file-content: 'a,b,c\na,b,c'
         find-duplicates: 'true'

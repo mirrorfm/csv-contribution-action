@@ -1,6 +1,6 @@
 {
   "name": "csv-contribution-action",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "description": "Checks contributions to CSV files",
   "main": "dist/src/index.js",
   "scripts": {

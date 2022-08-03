@@ -1,4 +1,4 @@
-name: 'csv-contribution-action'
+name: 'CSV Contribution'
 description: 'Checks contributions to CSV files'
 inputs:
   file-content:

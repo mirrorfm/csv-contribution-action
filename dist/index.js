@@ -2053,35 +2053,9 @@ const csvStringToObject = async function(str) {
   });
 }
 
-function quickSort(array) {
-  if (array.length <= 1) {
-    return array;
-  }
-
-  let pivot = array[0];
-
-  let left = [];
-  let right = [];
-
-  for (let i = 1; i < array.length; i++) {
-    array[i] < pivot ? left.push(array[i]) : right.push(array[i]);
-  }
-
-  return quickSort(left).concat(pivot, quickSort(right));
-}
-
 const findDuplicates = function(obj) {
-  const keys = obj.map((item) => item[0])
-  const sortedKeys = quickSort(keys);
-
-  let results = [];
-  for (let i = 0; i < sortedKeys.length - 1; i++) {
-    if (sortedKeys[i + 1] === sortedKeys[i]) {
-      results.push(sortedKeys[i]);
-    }
-  }
-
-  return results;
+  const counts = obj.map((item) => item[0]).reduce((m, k) => m.set(k, (m.has(k) ? m.get(k) : 0) + 1), new Map());
+  return Array.from(counts.entries()).filter(([_, c]) => c > 1).map(([k]) => k);
 }
 
 // main code
@@ -2104,6 +2078,7 @@ module.exports = {
   csvStringToObject,
   findDuplicates,
 }
+
 
 /***/ }),
 
