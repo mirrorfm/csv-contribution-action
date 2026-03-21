@@ -34,9 +34,21 @@ const findDuplicates = function(obj) {
   return Array.from(counts.entries()).filter(([_, c]) => c > 1).map(([k]) => k);
 }
 
+const findInvalidIds = function(obj, format) {
+  const invalid = [];
+  for (const row of obj.slice(1)) { // skip header
+    const id = row[0].trim();
+    if (format === 'numeric' && !/^\d+$/.test(id)) {
+      invalid.push(id);
+    }
+  }
+  return invalid;
+}
+
 // main code
 const fileContent = core.getInput('file-content');
 const findDuplicatesStr = core.getInput('find-duplicates');
+const validateIdFormat = core.getInput('validate-id-format');
 
 csvStringToObject(fileContent).then((obj) => {
   if (findDuplicatesStr === 'true') {
@@ -46,6 +58,14 @@ csvStringToObject(fileContent).then((obj) => {
       core.setFailed(`Found duplicates: ${duplicates}`);
     }
   }
+
+  if (validateIdFormat) {
+    const invalid = findInvalidIds(obj, validateIdFormat);
+
+    if (invalid.length > 0) {
+      core.setFailed(`Invalid IDs for format "${validateIdFormat}": ${invalid}`);
+    }
+  }
 }).catch((error) => {
   core.setFailed(`Invalid CSV: ${error.message}`);
 });
@@ -53,4 +73,5 @@ csvStringToObject(fileContent).then((obj) => {
 module.exports = {
   csvStringToObject,
   findDuplicates,
+  findInvalidIds,
 }

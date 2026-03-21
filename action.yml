@@ -9,6 +9,10 @@ inputs:
     description: 'Find duplicates'
     required: false
     default: 'false'
+  validate-id-format:
+    description: 'Validate ID format in first column. Supported: "numeric"'
+    required: false
+    default: ''
 runs:
   using: 'node16'
   main: 'dist/index.js'
